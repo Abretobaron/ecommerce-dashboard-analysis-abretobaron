@@ -1,4 +1,4 @@
-﻿from pathlib import Path
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -90,21 +90,21 @@ def plot_category(category_df, n):
     top, bottom = category_df.head(n), category_df.tail(n)
     fig, axes = plt.subplots(1, 2, figsize=(16, 5))
     sns.barplot(x=top["revenue"] / 1e3, y=top.index, color=HIGHLIGHT, ax=axes[0])
-    axes[0].set_title(f"{n} Kategori dengan Revenue Tertinggi", fontsize=14, loc="left")
+    axes[0].set_title(f"{n} Kategori dengan Revenue Tertinggi", fontsize=14, loc="left", pad=12)
     sns.barplot(x=bottom["revenue"] / 1e3, y=bottom.index, color=MUTED, ax=axes[1])
-    axes[1].set_title(f"{n} Kategori dengan Revenue Terendah", fontsize=14, loc="left")
+    axes[1].set_title(f"{n} Kategori dengan Revenue Terendah", fontsize=14, loc="left", pad=12)
 
     for ax, data in zip(axes, [top, bottom]):
         ax.set_xlabel("Revenue (ribu R$)")
         ax.set_ylabel("")
+        max_val = data["revenue"].max() / 1e3
         for i, (rev, share) in enumerate(zip(data["revenue"], data["share_pct"])):
             ax.text(rev / 1e3, i, f"  {rev / 1e3:,.1f}k ({share:.2f}%)", va="center", fontsize=10)
-        ax.set_xlim(0, ax.get_xlim()[1] * 1.25)
+        ax.set_xlim(0, max_val * 1.35)
         sns.despine(ax=ax, left=True)
 
-    fig.suptitle(f"{n} kategori teratas menyumbang {top['share_pct'].sum():.1f}% dari total revenue",
-                 fontsize=15, x=0.01, ha="left")
     plt.tight_layout()
+    plt.subplots_adjust(wspace=0.35)
     return fig
 
 
@@ -113,13 +113,13 @@ def plot_delay_review(delay_df):
     labels = delay_df.index.astype(str)
     sns.barplot(x=labels, y=delay_df["avg_review"], palette=[DELAY_COLORS[g] for g in labels],
                 hue=labels, legend=False, ax=ax)
-    ax.set_title("Semakin lama terlambat, review score semakin anjlok", fontsize=13, loc="left")
+    ax.set_title("Semakin lama terlambat, review score semakin anjlok", fontsize=13, loc="left", pad=12)
     ax.set_xlabel("")
     ax.set_ylabel("Rata-rata review score (1-5)")
-    ax.set_ylim(0, 5)
+    ax.set_ylim(0, 5.3)
     ax.tick_params(axis="x", rotation=20)
     for i, v in enumerate(delay_df["avg_review"]):
-        ax.text(i, v + 0.07, f"{v:.2f}", ha="center", fontsize=11)
+        ax.text(i, v + 0.08, f"{v:.2f}", ha="center", fontsize=11)
     sns.despine(ax=ax, left=True)
     plt.tight_layout()
     return fig
@@ -130,11 +130,13 @@ def plot_top_late_states(state_df, overall_late, n=10):
     fig, ax = plt.subplots(figsize=(8, 5.5))
     sns.barplot(x=top_late["late_pct"], y=top_late.index, color=BAD, ax=ax)
     ax.axvline(overall_late, color="black", linestyle="--", linewidth=1)
-    ax.set_title(f"{len(top_late)} State dengan Persentase Pesanan Terlambat Tertinggi", fontsize=13, loc="left")
+    ax.set_title(f"{len(top_late)} State dengan Persentase Pesanan Terlambat Tertinggi", fontsize=13, loc="left", pad=12)
     ax.set_xlabel(f"Pesanan terlambat (%)  |  garis putus-putus = rata-rata {overall_late:.1f}%")
     ax.set_ylabel("")
+    max_pct = top_late["late_pct"].max()
+    ax.set_xlim(0, max_pct * 1.25)
     for i, v in enumerate(top_late["late_pct"]):
-        ax.text(v + 0.2, i, f"{v:.1f}%", va="center", fontsize=10)
+        ax.text(v + 0.3, i, f"{v:.1f}%", va="center", fontsize=10)
     sns.despine(ax=ax, left=True)
     plt.tight_layout()
     return fig
@@ -144,18 +146,20 @@ def plot_rfm(summary):
     fig, axes = plt.subplots(1, 2, figsize=(16, 5))
     order = summary.index
     sns.barplot(x=summary["customer_pct"], y=order, color=MUTED, ax=axes[0])
-    axes[0].set_title("Proporsi Pelanggan per Segmen (%)", fontsize=14, loc="left")
+    axes[0].set_title("Proporsi Pelanggan per Segmen (%)", fontsize=14, loc="left", pad=12)
     sns.barplot(x=summary["revenue_pct"], y=order, color=HIGHLIGHT, ax=axes[1])
-    axes[1].set_title("Kontribusi Revenue per Segmen (%)", fontsize=14, loc="left")
+    axes[1].set_title("Kontribusi Revenue per Segmen (%)", fontsize=14, loc="left", pad=12)
     for ax, col in zip(axes, ["customer_pct", "revenue_pct"]):
         ax.set_xlabel("%")
         ax.set_ylabel("")
+        max_val = summary[col].max()
         for i, v in enumerate(summary[col]):
-            ax.text(v + 0.3, i, f"{v:.1f}%", va="center", fontsize=10)
-        ax.set_xlim(0, ax.get_xlim()[1] * 1.15)
+            ax.text(v + 0.4, i, f"{v:.1f}%", va="center", fontsize=10)
+        ax.set_xlim(0, max_val * 1.25)
         sns.despine(ax=ax, left=True)
     axes[1].set_yticklabels([])
     plt.tight_layout()
+    plt.subplots_adjust(wspace=0.15, top=0.88)
     return fig
 
 
