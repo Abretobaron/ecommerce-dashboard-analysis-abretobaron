@@ -320,12 +320,15 @@ with tab_geo:
 with tab_conclusion:
     st.subheader("Kesimpulan")
     st.markdown("""
-- **Pertanyaan 1:** Revenue didominasi `health_beauty`, `watches_gifts`, `bed_bath_table`, `sports_leisure`, dan
-  `computers_accessories` yang bersama-sama menyumbang 39,9% total revenue (R\\$ 13,18 juta). Lima kategori terendah
-  masing-masing menyumbang kurang dari 0,01%.
-- **Pertanyaan 2:** Keterlambatan menurunkan review dari 4,29 (tepat waktu) menjadi 2,57 (terlambat), dan sekitar 1,7
-  bila terlambat lebih dari 7 hari. Keterlambatan tertinggi di AL (24,0%), MA (19,6%), PI (16,0%), CE (15,4%), dan SE (15,4%),
-  dibanding rata-rata nasional 8,1%.
+- **Pertanyaan 1:** Total revenue (hanya harga produk, tanpa ongkir) sebesar R\\$ 13,18 juta.
+  Revenue **tertinggi** adalah `health_beauty` (R\\$ 1.229.558; 9,33%) dan **terendah** adalah `security_and_services`
+  (R\\$ 283; 2 item terjual). Lima kategori teratas: `health_beauty` (R\\$ 1.229.558), `watches_gifts` (R\\$ 1.163.188),
+  `bed_bath_table` (R\\$ 1.022.956), `sports_leisure` (R\\$ 952.661), dan `computers_accessories` (R\\$ 887.945),
+  bersama-sama menyumbang R\\$ 5.256.307 atau 39,9% total revenue.
+- **Pertanyaan 2:** Keterlambatan menurunkan rata-rata review dari 4,29 (tepat waktu) menjadi 2,57 (terlambat),
+  yaitu **turun 1,72 poin (sekitar 40,1%)**, dan sekitar 1,7 bila terlambat lebih dari 7 hari. 10 state dengan persentase
+  keterlambatan tertinggi (pesanan terlambat dibanding total pesanan state tersebut; rata-rata nasional 8,1%):
+  AL (24,0%), MA (19,6%), PI (16,0%), CE (15,4%), SE (15,4%), BA (14,0%), RJ (13,5%), TO (12,8%), RR (12,5%), PA (12,4%).
 - **RFM:** 97,1% pelanggan hanya membeli sekali, dan 78% revenue berasal dari pelanggan bernilai tinggi yang separuhnya dormant.
 - **Geospasial:** Revenue terpusat di Tenggara, keterlambatan terparah di Timur Laut.
 
